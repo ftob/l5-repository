@@ -87,8 +87,8 @@ class RequestCriteria implements CriteriaInterface
                     if ( $isFirstField || $modelForceAndWhere ) {
                         if (!is_null($value)) {
                             if(!is_null($relation)) {
-                                $query->whereHas($relation, function($query) use($field,$condition,$value) {
-                                    $query->where($field,$condition,$value);
+                                $query->whereHas($relation, function($query) use($relation, $field,$condition,$value) {
+                                    $query->where($relation. '.' . $field,$condition,$value);
                                 });
                             } else {
                                 $query->where($modelTableName.'.'.$field,$condition,$value);
@@ -98,8 +98,8 @@ class RequestCriteria implements CriteriaInterface
                     } else {
                         if (!is_null($value)) {
                             if(!is_null($relation)) {
-                                $query->orWhereHas($relation, function($query) use($field,$condition,$value) {
-                                    $query->where($field,$condition,$value);
+                                $query->orWhereHas($relation, function($query) use($relation, $field,$condition,$value) {
+                                    $query->where($relation . '.' . $field,$condition,$value);
                                 });
                             } else {
                                 $query->orWhere($modelTableName.'.'.$field, $condition, $value);
